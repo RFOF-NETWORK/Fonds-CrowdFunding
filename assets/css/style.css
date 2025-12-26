@@ -1,151 +1,51 @@
-/* Grundlayout */
 :root {
-    --bg-color: #0b1020;
-    --card-bg: #131933;
+    --bg: #0b1020;
+    --card: #131933;
     --accent: #ffb400;
-    --accent-soft: #ffb40033;
-    --text-main: #f5f5f5;
-    --text-muted: #a0a4b8;
-    --danger: #ff4b4b;
-    --success: #25d366;
-    --border-radius: 10px;
-    --transition-fast: 0.2s ease;
-    --shadow-soft: 0 10px 25px rgba(0, 0, 0, 0.35);
-    --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-}
-
-*, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+    --text: #f5f5f5;
 }
 
 body {
-    font-family: var(--font-main);
-    background: radial-gradient(circle at top, #181f3b, #050715 55%);
-    color: var(--text-main);
-    line-height: 1.6;
-    min-height: 100vh;
+    background: var(--bg);
+    color: var(--text);
+    font-family: sans-serif;
+    margin: 0; padding: 0;
 }
 
-.container {
-    width: 100%;
-    max-width: 960px;
-    margin: 0 auto;
-    padding: 1.5rem;
-}
-
-.site-header {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), transparent);
-    backdrop-filter: blur(10px);
-}
-
-.site-header h1 {
-    font-size: 2rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-}
-
-.subtitle {
-    color: var(--text-muted);
-    margin-top: 0.5rem;
-}
-
-main {
-    padding-top: 1rem;
-    padding-bottom: 2rem;
-}
-
-section { margin-bottom: 2rem; }
-h2 { font-size: 1.4rem; margin-bottom: 0.75rem; }
-p { margin-bottom: 0.75rem; }
+.container { max-width: 800px; margin: 0 auto; padding: 20px; }
 
 .status-box {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 1.25rem;
-    box-shadow: var(--shadow-soft);
-    border: 1px solid rgba(255, 255, 255, 0.03);
+    background: var(--card);
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.05);
+    margin-bottom: 20px;
 }
 
-.status-row {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.5rem;
-    font-size: 0.95rem;
-}
+.status-row { display: flex; justify-content: space-between; margin-bottom: 10px; }
 
 .progress-bar {
-    width: 100%;
-    height: 12px;
-    background: #0b1020;
-    border-radius: 999px;
-    overflow: hidden;
-    margin: 0.75rem 0;
-    border: 1px solid rgba(255, 255, 255, 0.06);
+    width: 100%; height: 14px; background: #050715;
+    border-radius: 10px; overflow: hidden;
 }
 
 .progress-fill {
-    height: 100%;
-    width: 0%;
+    width: 0%; height: 100%;
     background: linear-gradient(90deg, #ffb400, #ff6b00);
-    transition: width 0.4s ease;
-}
-
-.progress-text { font-size: 0.9rem; color: var(--text-muted); }
-
-/* Zahlungs-Methoden Styling */
-.method-card h3 {
-    margin-bottom: 0.5rem;
-    color: var(--accent);
+    transition: width 1s ease-in-out;
 }
 
 .btn-paypal {
-    display: block;
-    background: #0070ba;
-    color: white !important;
-    text-align: center;
-    padding: 1rem;
-    border-radius: 10px;
-    text-decoration: none;
-    font-weight: bold;
-    margin-top: 1rem;
-    transition: var(--transition-fast);
-}
-
-.btn-paypal:hover {
-    background: #005ea6;
-    transform: translateY(-2px);
+    display: block; background: #0070ba; color: white;
+    text-align: center; padding: 15px; text-decoration: none;
+    font-weight: bold; border-radius: 8px; margin-top: 15px;
 }
 
 .crypto-address {
-    background: #050715;
-    padding: 0.75rem;
-    border-radius: 5px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    word-break: break-all;
-    font-family: monospace;
-    color: var(--accent);
-    margin-top: 0.5rem;
+    background: #050715; padding: 12px; border-radius: 6px;
+    font-family: monospace; color: var(--accent);
+    word-break: break-all; margin: 10px 0;
 }
 
-.donor-list-section {
-    background: var(--card-bg);
-    border-radius: var(--border-radius);
-    padding: 1.25rem;
-}
-
-.donor-list { list-style: none; margin-top: 0.5rem; }
-.donor-list li {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.4rem 0;
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-}
-
-.site-footer {
-    border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 2rem 0;
-    text-align: center;
-}
+.site-header { text-align: center; padding: 40px 0; }
+.progress-text { font-size: 0.8rem; margin-top: 8px; opacity: 0.7; }

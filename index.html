@@ -4,78 +4,55 @@
     <meta charset="UTF-8">
     <title>Mein Crowdfunding – Spendenplattform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Persönliche Crowdfunding-Seite für freiwillige Spenden.">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header class="site-header">
         <div class="container">
             <h1>Mein Crowdfunding Projekt</h1>
-            <p class="subtitle">Unterst&uuml;tze dieses Projekt mit einer freiwilligen Spende.</p>
+            <p class="subtitle">Unterst&uuml;tze dieses Projekt mit einer Spende.</p>
         </div>
     </header>
 
     <main class="container">
-        <section class="project-info">
-            <h2>Projektbeschreibung</h2>
-            <p>
-                Dieses Projekt sammelt freiwillige Beitr&auml;ge, um unabh&auml;ngige Entwicklung, Forschung und
-                transparente Technologien zu finanzieren. Jede Spende hilft dabei, das Ziel zu erreichen.
-            </p>
+        <section class="donation-status">
+            <h2>Spendenstatus (EUR)</h2>
+            <div class="status-box">
+                <div class="status-row"><span>Gesammelt:</span> <span id="current-eur">0 &euro;</span></div>
+                <div class="status-row"><span>Ziel:</span> <span>1.000 &euro;</span></div>
+                <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
+                <p id="text-eur" class="progress-text">0% erreicht</p>
+            </div>
         </section>
 
         <section class="donation-status">
-            <h2>Spendenstatus</h2>
+            <h2>Spendenstatus (BTC Live)</h2>
+            <div class="status-box" style="border-color: #f7931a;">
+                <div class="status-row"><span>Gesammelt:</span> <span id="current-btc">0 BTC</span></div>
+                <div class="status-row"><span>Ziel:</span> <span>1.000 BTC</span></div>
+                <div class="progress-bar"><div id="fill-btc" class="progress-fill" style="background: #f7931a;"></div></div>
+                <p id="text-btc" class="progress-text">Wird live gepr&uuml;ft...</p>
+            </div>
+        </section>
+
+        <section class="payment-methods">
+            <h2>Zahlungsmethode w&auml;hlen</h2>
             <div class="status-box">
-                <div class="status-row">
-                    <span>Aktuell gesammelt:</span>
-                    <span id="current-amount">0 €</span>
-                </div>
-                <div class="status-row">
-                    <span>Spendenziel:</span>
-                    <span id="goal-amount">1.000 €</span>
-                </div>
-                <div class="progress-bar">
-                    <div id="progress-fill" class="progress-fill"></div>
-                </div>
-                <p id="progress-text" class="progress-text">0 % des Ziels erreicht</p>
-            </div>
-        </section>
-
-        <section class="donation-methods">
-            <h2>Jetzt unterst&uuml;tzen</h2>
-            
-            <div class="status-box method-card">
                 <h3>PayPal</h3>
-                <p>Spende schnell und sicher via PayPal (Betrag frei w&auml;hlbar):</p>
-                <a href="https://www.paypal.me/DEIN_PAYPAL_NAME" target="_blank" class="btn-paypal">
-                    Mit PayPal spenden
-                </a>
+                <p>Klicke unten, um direkt via PayPal zu senden (Kein Scan n&ouml;tig):</p>
+                <a href="https://www.paypal.me/DEIN_PAYPAL_NAME" target="_blank" class="btn-paypal">JETZT VIA PAYPAL SENDEN</a>
             </div>
 
-            <div class="status-box method-card" style="margin-top: 1rem;">
-                <h3>Bitcoin (BTC)</h3>
-                <p>Sende deine Spende direkt an meine Wallet-Adresse:</p>
-                <div class="crypto-address">
-                    <code>bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</code>
-                </div>
-                <p class="small-note" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
-                    Hinweis: Nur BTC an diese Adresse senden.
-                </p>
+            <div class="status-box" style="margin-top: 1rem;">
+                <h3>Bitcoin Wallet</h3>
+                <div class="crypto-address">bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</div>
+                <p class="small-note">Die Anzeige oben aktualisiert sich bei BTC-Eingang automatisch.</p>
             </div>
-        </section>
-
-        <section class="donor-list-section">
-            <h2>Letzte Unterst&uuml;tzer</h2>
-            <ul id="donor-list" class="donor-list">
-                </ul>
         </section>
     </main>
 
     <footer class="site-footer">
-        <div class="container">
-            <p>&copy; <span id="year"></span> Mein Crowdfunding Projekt. Alle Rechte vorbehalten.</p>
-        </div>
+        <div class="container"><p>&copy; 2025 Crowdfunding Projekt</p></div>
     </footer>
 
     <script src="assets/js/script.js"></script>
