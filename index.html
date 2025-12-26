@@ -11,7 +11,7 @@
     <header class="site-header">
         <div class="container">
             <h1>Mein Crowdfunding Projekt</h1>
-            <p class="subtitle">Unterstütze dieses Projekt mit einer freiwilligen Spende.</p>
+            <p class="subtitle">Unterst&uuml;tze dieses Projekt mit einer freiwilligen Spende.</p>
         </div>
     </header>
 
@@ -19,8 +19,8 @@
         <section class="project-info">
             <h2>Projektbeschreibung</h2>
             <p>
-                Dieses Projekt sammelt freiwillige Beiträge, um unabhängige Entwicklung, Forschung und
-                transparente Technologien zu finanzieren. Jede Spende – egal wie klein – hilft.
+                Dieses Projekt sammelt freiwillige Beitr&auml;ge, um unabh&auml;ngige Entwicklung, Forschung und
+                transparente Technologien zu finanzieren. Jede Spende hilft dabei, das Ziel zu erreichen.
             </p>
         </section>
 
@@ -39,27 +39,34 @@
                     <div id="progress-fill" class="progress-fill"></div>
                 </div>
                 <p id="progress-text" class="progress-text">0 % des Ziels erreicht</p>
-                <p class="note">
-                    Hinweis: Auf dieser Demo-Seite werden Spenden lokal im Browser gespeichert (kein echtes Geld).
+            </div>
+        </section>
+
+        <section class="donation-methods">
+            <h2>Jetzt unterst&uuml;tzen</h2>
+            
+            <div class="status-box method-card">
+                <h3>PayPal</h3>
+                <p>Spende schnell und sicher via PayPal (Betrag frei w&auml;hlbar):</p>
+                <a href="https://www.paypal.me/DEIN_PAYPAL_NAME" target="_blank" class="btn-paypal">
+                    Mit PayPal spenden
+                </a>
+            </div>
+
+            <div class="status-box method-card" style="margin-top: 1rem;">
+                <h3>Bitcoin (BTC)</h3>
+                <p>Sende deine Spende direkt an meine Wallet-Adresse:</p>
+                <div class="crypto-address">
+                    <code>bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</code>
+                </div>
+                <p class="small-note" style="font-size: 0.75rem; color: var(--text-muted); margin-top: 0.5rem;">
+                    Hinweis: Nur BTC an diese Adresse senden.
                 </p>
             </div>
         </section>
 
-        <section class="donation-form">
-            <h2>Jetzt spenden</h2>
-            <form id="donation-form">
-                <label for="donation-amount">Betrag in Euro</label>
-                <input type="number" id="donation-amount" min="1" step="1" required placeholder="z.B. 10">
-
-                <label for="donor-name">Name (optional)</label>
-                <input type="text" id="donor-name" placeholder="Dein Name oder anonym">
-
-                <button type="submit">Spende hinzufügen (Demo)</button>
-            </form>
-        </section>
-
         <section class="donor-list-section">
-            <h2>Letzte Unterstützer (Demo)</h2>
+            <h2>Letzte Unterst&uuml;tzer</h2>
             <ul id="donor-list" class="donor-list">
                 </ul>
         </section>
@@ -67,7 +74,7 @@
 
     <footer class="site-footer">
         <div class="container">
-            <p>© <span id="year"></span> Mein Crowdfunding Projekt. Alle Rechte vorbehalten.</p>
+            <p>&copy; <span id="year"></span> Mein Crowdfunding Projekt. Alle Rechte vorbehalten.</p>
         </div>
     </footer>
 
