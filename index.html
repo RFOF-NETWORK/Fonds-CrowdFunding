@@ -36,11 +36,11 @@
                     <span id="goal-amount">1.000 €</span>
                 </div>
                 <div class="progress-bar">
-                    <div id="progress-fill"></div>
+                    <div id="progress-fill" class="progress-fill"></div>
                 </div>
-                <p id="progress-text">0 % des Ziels erreicht</p>
+                <p id="progress-text" class="progress-text">0 % des Ziels erreicht</p>
                 <p class="note">
-                    Hinweis: Auf dieser Demo-Seite werden Spenden lokal im Browser gespeichert (kein echtes Geld, kein echter Transfer).
+                    Hinweis: Auf dieser Demo-Seite werden Spenden lokal im Browser gespeichert (kein echtes Geld).
                 </p>
             </div>
         </section>
@@ -56,29 +56,12 @@
 
                 <button type="submit">Spende hinzufügen (Demo)</button>
             </form>
-
-            <p class="small-note">
-                Diese Demo simuliert eine Spende nur lokal mit JavaScript. 
-                Für echte Zahlungen müsstest du z.B. PayPal, Stripe o.ä. einbinden oder deinen eigenen Server nutzen.
-            </p>
-
-            <div class="external-donation">
-                <h3>Externe Bezahl-Links (Platzhalter)</h3>
-                <p>
-                    Du kannst hier später echte Zahlungs-Provider einbauen (z.B. PayPal-Button oder Stripe Checkout).
-                </p>
-                <!-- Beispiel-Button: Ersetze # durch deinen echten Payment-Link -->
-                <a href="#" class="btn-secondary" target="_blank" rel="noopener noreferrer">
-                    Externer Spendenlink (Platzhalter)
-                </a>
-            </div>
         </section>
 
         <section class="donor-list-section">
             <h2>Letzte Unterstützer (Demo)</h2>
             <ul id="donor-list" class="donor-list">
-                <!-- Wird per JavaScript gefüllt -->
-            </ul>
+                </ul>
         </section>
     </main>
 

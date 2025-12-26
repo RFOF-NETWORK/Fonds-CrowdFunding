@@ -1,5 +1,4 @@
-/ Grundlayout /
-
+/* Grundlayout */
 :root {
     --bg-color: #0b1020;
     --card-bg: #131933;
@@ -31,8 +30,7 @@ body {
     min-height: 100vh;
 }
 
-/ Container /
-
+/* Container */
 .container {
     width: 100%;
     max-width: 960px;
@@ -40,8 +38,7 @@ body {
     padding: 1.5rem;
 }
 
-/ Header /
-
+/* Header */
 .site-header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     background: linear-gradient(to bottom, rgba(15, 23, 42, 0.9), transparent);
@@ -59,8 +56,7 @@ body {
     margin-top: 0.5rem;
 }
 
-/ Hauptbereiche /
-
+/* Hauptbereiche */
 main {
     padding-top: 1rem;
     padding-bottom: 2rem;
@@ -79,8 +75,7 @@ p {
     margin-bottom: 0.75rem;
 }
 
-/ Karten / Boxen /
-
+/* Karten / Boxen */
 .status-box {
     background: var(--card-bg);
     border-radius: var(--border-radius);
@@ -96,8 +91,7 @@ p {
     font-size: 0.95rem;
 }
 
-/ Fortschrittsbalken /
-
+/* Fortschrittsbalken - KORRIGIERT */
 .progress-bar {
     width: 100%;
     height: 12px;
@@ -108,20 +102,19 @@ p {
     border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-progress-fill {
+.progress-fill {
     height: 100%;
     width: 0%;
     background: linear-gradient(90deg, #ffb400, #ff6b00);
     transition: width 0.4s ease;
 }
 
-progress-text {
+.progress-text {
     font-size: 0.9rem;
     color: var(--text-muted);
 }
 
-/ Formular /
-
+/* Formular */
 .donation-form form {
     background: var(--card-bg);
     padding: 1.25rem;
@@ -146,7 +139,6 @@ progress-text {
     margin-bottom: 0.9rem;
     font-size: 0.95rem;
     outline: none;
-    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
 }
 
 .donation-form input:focus {
@@ -154,8 +146,7 @@ progress-text {
     box-shadow: 0 0 0 1px var(--accent-soft);
 }
 
-/ Buttons /
-
+/* Buttons */
 button,
 .btn-secondary {
     display: inline-flex;
@@ -170,7 +161,7 @@ button,
     letter-spacing: 0.03em;
     text-transform: uppercase;
     text-decoration: none;
-    transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+    transition: all var(--transition-fast);
 }
 
 button[type="submit"] {
@@ -178,7 +169,6 @@ button[type="submit"] {
     color: #151515;
     box-shadow: 0 8px 18px rgba(255, 180, 0, 0.35);
     width: 100%;
-    margin-top: 0.25rem;
 }
 
 button[type="submit"]:hover {
@@ -195,29 +185,13 @@ button[type="submit"]:hover {
 
 .btn-secondary:hover {
     background: rgba(255, 255, 255, 0.04);
-    transform: translateY(-1px);
 }
 
-/ Hinweise /
-
-.note {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-.small-note {
-    font-size: 0.8rem;
-    color: var(--text-muted);
-    margin-top: 0.75rem;
-}
-
-/ Donor-Liste /
-
+/* Donor-Liste */
 .donor-list-section {
     background: var(--card-bg);
     border-radius: var(--border-radius);
     padding: 1.25rem;
-    box-shadow: var(--shadow-soft);
     border: 1px solid rgba(255, 255, 255, 0.03);
 }
 
@@ -229,41 +203,13 @@ button[type="submit"]:hover {
 .donor-list li {
     display: flex;
     justify-content: space-between;
-    font-size: 0.9rem;
     padding: 0.4rem 0;
     border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
 }
 
-.donor-list li:last-child {
-    border-bottom: none;
-}
-
-/ Footer /
-
+/* Footer */
 .site-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 1rem 0;
-    background: rgba(5, 7, 21, 0.95);
+    padding: 2rem 0;
     text-align: center;
-}
-
-.site-footer p {
-    margin-bottom: 0;
-    font-size: 0.8rem;
-    color: var(--text-muted);
-}
-
-/ Responsiv /
-
-@media (min-width: 768px) {
-    .project-info,
-    .donation-status,
-    .donation-form,
-    .donor-list-section {
-        border-radius: var(--border-radius);
-    }
-
-    main {
-        padding-top: 2rem;
-    }
 }
