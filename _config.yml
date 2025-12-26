@@ -1,2 +1,5 @@
-include: [index.html, assets]
-exclude: [README.md]
+include:
+  - index.html
+  - assets
+exclude:
+  - README.md
