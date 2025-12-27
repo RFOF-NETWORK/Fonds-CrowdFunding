@@ -2,22 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Mein Crowdfunding – Spendenplattform</title>
+    <title>RFOF Crowdfunding – Spendenplattform</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <header class="site-header">
         <div class="container nav-bar">
-            <h1 onclick="showPage('home')" style="cursor:pointer">Mein Crowdfunding Projekt</h1>
+            <h1 onclick="showPage('home')" style="cursor:pointer">RFOF Social Club</h1>
+            
             <nav id="nav-guest">
+                <button onclick="showPage('home')" class="btn-nav">Home</button>
                 <button onclick="showPage('login')" class="btn-nav">Login</button>
                 <button onclick="showPage('register')" class="btn-nav accent">Register</button>
             </nav>
+            
             <nav id="nav-user" style="display:none;">
-                <button onclick="showPage('profile')" class="btn-nav">My Profile</button>
-                <button id="admin-link" onclick="showPage('admin')" class="btn-nav" style="display:none;">Admin Control</button>
-                <button onclick="logout()" class="btn-nav">Logout</button>
+                <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
+                <button onclick="showPage('profile')" class="btn-nav">My Wallet</button>
+                <button id="admin-link" onclick="showPage('admin')" class="btn-nav" style="display:none;">Admin</button>
+                <button onclick="logout()" class="btn-nav logout">Logout</button>
             </nav>
         </div>
     </header>
@@ -31,9 +35,8 @@
                     <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
                 <div class="status-box" style="border-color: #f7931a;">
-                    <div class="status-row"><span>Goal:</span> <span>1000 BTC</span></div>
+                    <div class="status-row"><span>Goal:</span> <span id="text-btc">0 / 1000 BTC</span></div>
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill" style="background: #f7931a;"></div></div>
-                    <p id="text-btc" class="progress-text">Connecting to Blockchain...</p>
                 </div>
             </section>
 
@@ -42,31 +45,31 @@
                     <h3>PayPal Donation</h3>
                     <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-paypal">SEND VIA PAYPAL</a>
                 </div>
-                <div class="status-box" style="margin-top: 1rem;">
+                <div class="status-box">
                     <h3>Direct BTC Deposit</h3>
                     <div class="crypto-address">bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</div>
                 </div>
-                <p style="margin-top:20px; text-align:center;">Follow: <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
-            <h2>User Dashboard</h2>
+            <h2>User Wallet</h2>
             <div class="status-box">
-                <h3>Personal BTC Wallet</h3>
+                <h3>Personal BTC Address</h3>
                 <div class="crypto-address" id="user-btc-address">Generating...</div>
-                <div class="status-row"><span>Balance:</span> <span id="user-balance">0.00000000 BTC</span></div>
-                <button onclick="togglePhrases()" class="btn-secondary">Show My Recovery Phrases</button>
-                <div id="phrases-display" class="crypto-address" style="display:none; color:#ffb400; margin-top:10px;"></div>
+                
+                <hr style="border:0; border-top:1px solid #333; margin: 20px 0;">
+                
+                <h3>Recovery Phrases</h3>
+                <p style="font-size: 0.8rem; color: #ff4444;">Warning: Keep these 12 words private!</p>
+                <div id="phrases-display" class="phrases-box">******** ******** ********</div>
+                <button onclick="togglePhrases()" class="btn-secondary">SHOW / HIDE PHRASES</button>
             </div>
+            
             <div class="status-box">
-                <h3>Referral Program (25% Commission)</h3>
-                <p>Invite friends to earn. Link:</p>
-                <div class="crypto-address" id="invite-link"></div>
-            </div>
-            <div class="status-box">
-                <button class="btn-paypal" style="background:#222;">SEND BTC</button>
-                <button class="btn-paypal" style="background:#333; margin-top:10px;">RECEIVE BTC</button>
+                <h3>Referral Program</h3>
+                <p>Your Link (25% Commission):</p>
+                <div class="crypto-address" id="invite-link">Link wird generiert...</div>
             </div>
         </div>
 
@@ -76,16 +79,16 @@
                 <input type="text" id="login-user" placeholder="Username" class="input-field">
                 <input type="password" id="login-pass" placeholder="Password" class="input-field">
                 <button onclick="handleLogin()" class="btn-paypal">SIGN IN</button>
-                <p onclick="alert('Password reset initiated.')" style="cursor:pointer; font-size:0.8rem; margin-top:15px; opacity:0.6;">Forgot password?</p>
+                <p onclick="requestReset()" style="cursor:pointer; font-size:0.8rem; margin-top:15px; opacity:0.6;">Forgot password?</p>
             </div>
         </div>
 
         <div id="page-register" class="page" style="display:none;">
             <div class="status-box">
                 <h2>Register Account</h2>
-                <input type="text" id="reg-user" placeholder="Choose Username" class="input-field">
-                <input type="email" id="reg-email" placeholder="Email Address" class="input-field">
-                <input type="password" id="reg-pass" placeholder="Create Password" class="input-field">
+                <input type="text" id="reg-user" placeholder="Username" class="input-field">
+                <input type="email" id="reg-email" placeholder="Email" class="input-field">
+                <input type="password" id="reg-pass" placeholder="Password" class="input-field">
                 <button onclick="handleRegister()" class="btn-paypal">CREATE ACCOUNT</button>
             </div>
         </div>
@@ -94,16 +97,14 @@
             <h2>Admin Master Control</h2>
             <div class="status-box">
                 <h3>Adjust Crowdfunding EUR</h3>
-                <input type="number" id="admin-eur-val" class="input-field" placeholder="Enter EUR Amount">
-                <button onclick="adminSetEur()" class="btn-paypal">UPDATE VALUE</button>
-                <hr style="margin:20px 0; border:0; border-top:1px solid #333;">
-                <button onclick="alert('Autonomous Commission Distribution started...')" class="btn-paypal" style="background:#f7931a;">DISTRIBUTE PROVISION</button>
+                <input type="number" id="admin-eur-val" class="input-field" placeholder="Total EUR Amount">
+                <button onclick="adminSetEur()" class="btn-paypal">UPDATE GLOBAL VALUE</button>
             </div>
         </div>
     </main>
 
     <footer class="site-footer">
-        <div class="container"><p>&copy; 2025 RFOF Social Club - BTC Crowdfunding Banking</p></div>
+        <div class="container"><p>&copy; 2025 RFOF Social Club</p></div>
     </footer>
 
     <script src="assets/js/script.js"></script>
