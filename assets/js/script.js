@@ -1,7 +1,7 @@
 const BTC_GOAL = 1000;
 const EUR_ROUND_LIMIT = 1000;
 const ADMIN_ID = "RFOFsocialCLUB";
-const API_URL = "http://localhost:5000/api";
+const API_URL = "http://localhost:5050/api";
 
 let state = {
     user: JSON.parse(localStorage.getItem('session_user')) || null,
