@@ -10,12 +10,10 @@
     <header class="site-header">
         <div class="container nav-bar">
             <h1 onclick="showPage('home')" style="cursor:pointer">RFOF SOCIAL CLUB</h1>
-            
             <nav id="nav-guest">
                 <button onclick="showPage('login')" class="btn-nav">Login</button>
                 <button onclick="showPage('register')" class="btn-nav accent-btn">Register</button>
             </nav>
-            
             <nav id="nav-user" style="display:none;">
                 <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
                 <button onclick="showPage('profile')" class="btn-nav">My Wallet</button>
@@ -58,28 +56,20 @@
             <h2>Personal Sato-Extension</h2>
             <div class="status-box">
                 <h3>Personal BTC Wallet</h3>
-                <p class="small-info" style="font-size: 0.8rem; opacity: 0.7;">Compatible with all Bitcoin Network standards (SegWit/Taproot).</p>
-                <div class="crypto-address" id="user-btc-address">Generating Secure Data...</div>
-                
+                <div class="crypto-address" id="user-btc-address">Syncing with Node...</div>
                 <div class="status-row" style="margin-top:15px;">
                     <span>Available Balance:</span> 
                     <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00000000 BTC</span>
                 </div>
-                
                 <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-                
                 <h3>Recovery Phrases (12 Words)</h3>
-                <p style="color: #ff4757; font-size: 0.85rem; margin-bottom: 10px;">⚠️ Keep these 12 words secret! They are your key to the blockchain.</p>
-                
-                <div id="phrases-display" class="phrases-box" style="display:none; margin-bottom: 15px;"></div>
-                
+                <div id="phrases-display" class="phrases-box" style="display:none; background: #000; padding: 10px; margin-bottom: 10px; border-radius: 5px; font-family: monospace;"></div>
                 <button onclick="togglePhrases()" class="btn-action btc-color">VIEW RECOVERY PHRASES</button>
             </div>
-            
             <div class="status-box">
-                <h3>Referral Program (25% Commission)</h3>
-                <p>Earn 25% reward for every person you invite:</p>
-                <div class="crypto-address" id="invite-link"></div>
+                <h3>Referral Program (25%)</h3>
+                <p>Your unique Invitation-Link:</p>
+                <div class="crypto-address" id="invite-link" style="font-size: 0.7rem;"></div>
             </div>
         </div>
 
@@ -87,13 +77,8 @@
             <h2>Master Control - Satoramy</h2>
             <div class="status-box admin-glow">
                 <h3>Update Global EUR Value</h3>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Enter EUR Amount">
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Enter Total EUR">
                 <button onclick="adminSetEur()" class="btn-action">SYNC DATABASE</button>
-                
-                <div style="margin-top: 25px;">
-                    <h3>Commission Distribution</h3>
-                    <button onclick="alert('Calculating 25% Rewards for Referrers...')" class="btn-action btc-color">DISTRIBUTE REWARDS</button>
-                </div>
             </div>
         </div>
 

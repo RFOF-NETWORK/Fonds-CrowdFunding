@@ -23,7 +23,7 @@ async function handleRegister() {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({ user_data: { username: u, email: e, password: p, referrer: ref } })
         });
-        alert("Account created successfully!");
+        alert("Sato-Account created successfully!");
         showPage('login');
     } catch(err) { alert("Bridge offline!"); }
 }
@@ -49,6 +49,21 @@ async function handleLogin() {
     } catch(err) { alert("Bridge error!"); }
 }
 
+// --- ADMIN: EUR WERT SETZEN ---
+async function adminSetEur() {
+    const val = document.getElementById('admin-eur-val').value;
+    if(!val) return alert("Enter a value!");
+    try {
+        await fetch(`${API_URL}/sync`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ admin_eur: val })
+        });
+        alert("Database Synced!");
+        updateView();
+    } catch(e) { alert("Sync failed!"); }
+}
+
 // --- DASHBOARD SYNC ---
 async function updateView() {
     const isUser = !!state.user;
@@ -60,9 +75,7 @@ async function updateView() {
     if(adminLink) adminLink.style.display = isAdmin ? 'inline-block' : 'none';
 
     try {
-        // Wir senden NUR den Usernamen zur Identifikation, keine lokalen UI-Texte
         const syncPayload = state.user ? { user_data: { username: state.user.username } } : {};
-        
         const res = await fetch(`${API_URL}/sync`, { 
             method: 'POST', 
             headers: {'Content-Type': 'application/json'}, 
@@ -70,22 +83,27 @@ async function updateView() {
         });
         const data = await res.json();
         
-        // Stats
+        // Globaler Fortschritt
         const totalEur = data.db.global.eur || 0;
         document.getElementById('current-eur').textContent = `${totalEur % EUR_ROUND_LIMIT} € (Round ${Math.floor(totalEur/EUR_ROUND_LIMIT)+1})`;
         document.getElementById('fill-eur').style.width = (totalEur % EUR_ROUND_LIMIT / 10) + "%";
 
-        // User Data Display
+        // BTC Goal Tracker (Live API + Database)
+        const btcRes = await fetch(`https://blockchain.info/rawaddr/bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d`);
+        const btcData = await btcRes.json();
+        const totalBtc = (btcData.final_balance / 100000000) + (totalEur / 90000);
+        document.getElementById('text-btc').textContent = `${totalBtc.toFixed(8)} / ${BTC_GOAL} BTC`;
+        document.getElementById('fill-btc').style.width = (totalBtc / BTC_GOAL * 100) + "%";
+
+        // User Data
         if(state.user && data.db.users[state.user.username]) {
             const dbUser = data.db.users[state.user.username];
-            
-            // Lokalen Speicher mit echten Serverdaten synchronisieren
             state.user = dbUser;
             localStorage.setItem('session_user', JSON.stringify(dbUser));
 
-            // UI füllen
             document.getElementById('user-btc-address').textContent = dbUser.wallet;
             document.getElementById('phrases-display').textContent = dbUser.phrases;
+            document.getElementById('user-balance').textContent = `${dbUser.balance || "0.00000000"} BTC`;
             document.getElementById('invite-link').textContent = `https://rfof-network.github.io/Fonds-CrowdFunding/?ref=${dbUser.username}`;
         }
     } catch(e) { console.log("Sync..."); }
