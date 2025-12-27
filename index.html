@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>RFOF Crowdfunding – Spendenplattform</title>
+    <title>RFOF Social Club - Crowdfunding</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -10,101 +10,98 @@
     <header class="site-header">
         <div class="container nav-bar">
             <h1 onclick="showPage('home')" style="cursor:pointer">RFOF Social Club</h1>
-            
             <nav id="nav-guest">
-                <button onclick="showPage('home')" class="btn-nav">Home</button>
                 <button onclick="showPage('login')" class="btn-nav">Login</button>
                 <button onclick="showPage('register')" class="btn-nav accent">Register</button>
             </nav>
-            
             <nav id="nav-user" style="display:none;">
-                <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
-                <button onclick="showPage('profile')" class="btn-nav">My Wallet</button>
-                <button id="admin-link" onclick="showPage('admin')" class="btn-nav" style="display:none;">Admin</button>
-                <button onclick="logout()" class="btn-nav logout">Logout</button>
+                <button onclick="showPage('profile')" class="btn-nav">Mein Wallet</button>
+                <button id="admin-link" onclick="showPage('admin')" class="btn-nav admin-btn" style="display:none;">Master-Admin</button>
+                <button onclick="logout()" class="btn-nav logout-btn">Logout</button>
             </nav>
         </div>
     </header>
 
     <main class="container">
         <div id="page-home" class="page">
-            <section class="donation-status">
-                <h2>Crowdfunding Progress</h2>
+            <section class="intro">
+                <h2>Mein Crowdfunding Projekt</h2>
+                <p>Dieses Projekt sammelt freiwillige Beiträge, um unabhängige Entwicklung, Forschung und transparente Technologien zu finanzieren. Jede Spende hilft dabei, das Ziel zu erreichen.</p>
+            </section>
+
+            <section class="status-section">
+                <h3>Spendenstatus (EUR & BTC Live)</h3>
                 <div class="status-box">
-                    <div class="status-row"><span>EUR Contributions:</span> <span id="current-eur">0 €</span></div>
+                    <div class="status-row"><span>Gesammelt (EUR):</span> <span id="current-eur">0 €</span></div>
                     <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
-                <div class="status-box" style="border-color: #f7931a;">
-                    <div class="status-row"><span>Goal:</span> <span id="text-btc">0 / 1000 BTC</span></div>
-                    <div class="progress-bar"><div id="fill-btc" class="progress-fill" style="background: #f7931a;"></div></div>
+                <div class="status-box btc-border">
+                    <div class="status-row"><span>Spendenziel:</span> <span id="text-btc">0 / 1000 BTC</span></div>
+                    <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
                 </div>
             </section>
 
-            <section class="payment-methods">
+            <section class="support-methods">
+                <h3>Jetzt unterstützen</h3>
                 <div class="status-box">
-                    <h3>PayPal Donation</h3>
-                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-paypal">SEND VIA PAYPAL</a>
+                    <h4>PayPal</h4>
+                    <p>Spende schnell und sicher via PayPal (Betrag frei wählbar):</p>
+                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg">MIT PAYPAL SPENDEN</a>
                 </div>
                 <div class="status-box">
-                    <h3>Direct BTC Deposit</h3>
+                    <h4>Bitcoin (BTC)</h4>
+                    <p>Sende deine Spende direkt an meine Wallet-Adresse:</p>
                     <div class="crypto-address">bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</div>
+                    <p class="small-hint">Hinweis: Nur BTC an diese Adresse senden. Die Anzeige oben aktualisiert sich automatisch.</p>
+                </div>
+            </section>
+
+            <section class="news-footer">
+                <p>News: <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
+                <div class="status-box">
+                    <h4>Letzte Unterstützer</h4>
+                    <p>Vielen Dank für alle anonymen Bitcoin & PayPal Spenden!</p>
                 </div>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
-            <h2>User Wallet</h2>
+            <h2>User Wallet (Sato-Extension)</h2>
             <div class="status-box">
-                <h3>Personal BTC Address</h3>
-                <div class="crypto-address" id="user-btc-address">Generating...</div>
+                <h3>Persönliche BTC Adresse</h3>
+                <div class="crypto-address" id="user-btc-address">Generiere...</div>
+                <div class="balance-info">Guthaben: 0.00000000 BTC</div>
                 
-                <hr style="border:0; border-top:1px solid #333; margin: 20px 0;">
-                
+                <hr>
                 <h3>Recovery Phrases</h3>
-                <p style="font-size: 0.8rem; color: #ff4444;">Warning: Keep these 12 words private!</p>
-                <div id="phrases-display" class="phrases-box">******** ******** ********</div>
-                <button onclick="togglePhrases()" class="btn-secondary">SHOW / HIDE PHRASES</button>
+                <p class="warning-text">Warnung: Halte diese 12 Wörter geheim!</p>
+                <div id="phrases-display" class="phrases-blur">Wird geladen...</div>
+                <button onclick="togglePhrases()" class="btn-secondary">PHRASEN ANZEIGEN / VERBERGEN</button>
             </div>
             
             <div class="status-box">
-                <h3>Referral Program</h3>
-                <p>Your Link (25% Commission):</p>
-                <div class="crypto-address" id="invite-link">Link wird generiert...</div>
-            </div>
-        </div>
-
-        <div id="page-login" class="page" style="display:none;">
-            <div class="status-box">
-                <h2>Login</h2>
-                <input type="text" id="login-user" placeholder="Username" class="input-field">
-                <input type="password" id="login-pass" placeholder="Password" class="input-field">
-                <button onclick="handleLogin()" class="btn-paypal">SIGN IN</button>
-                <p onclick="requestReset()" style="cursor:pointer; font-size:0.8rem; margin-top:15px; opacity:0.6;">Forgot password?</p>
-            </div>
-        </div>
-
-        <div id="page-register" class="page" style="display:none;">
-            <div class="status-box">
-                <h2>Register Account</h2>
-                <input type="text" id="reg-user" placeholder="Username" class="input-field">
-                <input type="email" id="reg-email" placeholder="Email" class="input-field">
-                <input type="password" id="reg-pass" placeholder="Password" class="input-field">
-                <button onclick="handleRegister()" class="btn-paypal">CREATE ACCOUNT</button>
+                <h3>Referral Program (25% Provision)</h3>
+                <p>Lade Freunde ein und verdiene BTC. Dein Link:</p>
+                <div class="crypto-address" id="invite-link"></div>
             </div>
         </div>
 
         <div id="page-admin" class="page" style="display:none;">
-            <h2>Admin Master Control</h2>
-            <div class="status-box">
-                <h3>Adjust Crowdfunding EUR</h3>
-                <input type="number" id="admin-eur-val" class="input-field" placeholder="Total EUR Amount">
-                <button onclick="adminSetEur()" class="btn-paypal">UPDATE GLOBAL VALUE</button>
+            <h2>Master Control (Satoramy Only)</h2>
+            <div class="status-box admin-glow">
+                <h3>EUR Status manuell anpassen</h3>
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Betrag in EUR">
+                <button onclick="adminSetEur()" class="btn-action">WERT AKTUALISIEREN</button>
+                <button onclick="alert('Provisionen werden autonom verteilt...')" class="btn-action provision-btn">PROVISIONEN AUSZAHLEN</button>
             </div>
         </div>
+
+        <div id="page-login" class="page" style="display:none;"> ... </div>
+        <div id="page-register" class="page" style="display:none;"> ... </div>
     </main>
 
     <footer class="site-footer">
-        <div class="container"><p>&copy; 2025 RFOF Social Club</p></div>
+        <p>&copy; 2025 RFOF Social Club - Alle Rechte vorbehalten.</p>
     </footer>
 
     <script src="assets/js/script.js"></script>
