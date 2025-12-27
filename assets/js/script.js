@@ -7,6 +7,7 @@ let state = {
     user: JSON.parse(localStorage.getItem('session_user')) || null,
 };
 
+// --- REGISTRIERUNG ---
 async function handleRegister() {
     const u = document.getElementById('reg-user').value;
     const e = document.getElementById('reg-email').value;
@@ -16,21 +17,18 @@ async function handleRegister() {
 
     if(!u || !p) return alert("Please fill in Username and Password!");
 
-    const newUserRequest = { 
-        username: u, email: e, password: p, referrer: ref 
-    };
-    
     try {
         await fetch(`${API_URL}/sync`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ user_data: newUserRequest })
+            body: JSON.stringify({ user_data: { username: u, email: e, password: p, referrer: ref } })
         });
-        alert("Account created!");
+        alert("Account created successfully!");
         showPage('login');
     } catch(err) { alert("Bridge offline!"); }
 }
 
+// --- LOGIN ---
 async function handleLogin() {
     const u = document.getElementById('login-user').value;
     const p = document.getElementById('login-pass').value;
@@ -51,6 +49,7 @@ async function handleLogin() {
     } catch(err) { alert("Bridge error!"); }
 }
 
+// --- DASHBOARD SYNC ---
 async function updateView() {
     const isUser = !!state.user;
     document.getElementById('nav-guest').style.display = isUser ? 'none' : 'block';
@@ -61,10 +60,13 @@ async function updateView() {
     if(adminLink) adminLink.style.display = isAdmin ? 'inline-block' : 'none';
 
     try {
+        // Wir senden NUR den Usernamen zur Identifikation, keine lokalen UI-Texte
+        const syncPayload = state.user ? { user_data: { username: state.user.username } } : {};
+        
         const res = await fetch(`${API_URL}/sync`, { 
             method: 'POST', 
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(state.user ? { user_data: state.user } : {}) 
+            body: JSON.stringify(syncPayload) 
         });
         const data = await res.json();
         
@@ -73,13 +75,15 @@ async function updateView() {
         document.getElementById('current-eur').textContent = `${totalEur % EUR_ROUND_LIMIT} € (Round ${Math.floor(totalEur/EUR_ROUND_LIMIT)+1})`;
         document.getElementById('fill-eur').style.width = (totalEur % EUR_ROUND_LIMIT / 10) + "%";
 
-        // Wallet & Invitations
+        // User Data Display
         if(state.user && data.db.users[state.user.username]) {
             const dbUser = data.db.users[state.user.username];
-            // Update Local State with server data (Wallet, Phrases)
+            
+            // Lokalen Speicher mit echten Serverdaten synchronisieren
             state.user = dbUser;
             localStorage.setItem('session_user', JSON.stringify(dbUser));
 
+            // UI füllen
             document.getElementById('user-btc-address').textContent = dbUser.wallet;
             document.getElementById('phrases-display').textContent = dbUser.phrases;
             document.getElementById('invite-link').textContent = `https://rfof-network.github.io/Fonds-CrowdFunding/?ref=${dbUser.username}`;
