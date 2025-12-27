@@ -1,5 +1,2 @@
-node_modules/
-.env
-*.log
-__pycache__/
-.vscode/
+data_storage.json 
+backups/ 
