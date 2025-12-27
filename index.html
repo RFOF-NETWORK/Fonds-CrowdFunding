@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Satoramy Master Project – Bitcoininternet</title>
+    <title>RFOF SOCIAL CLUB – Sato-Network</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="assets/css/style.css">
 </head>
@@ -17,7 +17,7 @@
             <nav id="nav-user" style="display:none;">
                 <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
                 <button onclick="showPage('profile')" class="btn-nav">My Wallet</button>
-                <button id="admin-link" onclick="showPage('admin')" class="btn-nav admin-btn" style="display:none;">Master-Admin</button>
+                <button id="admin-link" onclick="showPage('admin')" class="btn-nav admin-btn admin-glow" style="display:none;">Master-Admin</button>
                 <button onclick="logout()" class="btn-nav logout-btn">Logout</button>
             </nav>
         </div>
@@ -36,39 +36,34 @@
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
                 </div>
             </section>
-
             <section class="payment-methods">
                 <div class="status-box">
                     <h3>PayPal Contribution</h3>
-                    <p>Support the project via PayPal (instant update):</p>
                     <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg">DONATE VIA PAYPAL</a>
                 </div>
                 <div class="status-box">
-                    <h3>Direct Bitcoin Deposit</h3>
-                    <p>Send BTC to the master project wallet:</p>
+                    <h3>Direct BTC Deposit</h3>
                     <div class="crypto-address">bc1qh7ucw0kmz0m3m808zhvxed46ma80f4yc92ph7d</div>
                 </div>
-                <p class="news-tag">Follow the vision: <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
             <h2>Personal Sato-Extension</h2>
             <div class="status-box">
-                <h3>Personal BTC Wallet</h3>
-                <div class="crypto-address" id="user-btc-address">Syncing with Node...</div>
-                <div class="status-row" style="margin-top:15px;">
-                    <span>Available Balance:</span> 
-                    <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00000000 BTC</span>
+                <h3>Your BTC Wallet</h3>
+                <div class="crypto-address" id="user-btc-address">Syncing...</div>
+                <div class="status-row">
+                    <span>Balance:</span> 
+                    <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00 BTC</span>
                 </div>
-                <hr style="border: 0; border-top: 1px solid rgba(255,255,255,0.1); margin: 20px 0;">
-                <h3>Recovery Phrases (12 Words)</h3>
-                <div id="phrases-display" class="phrases-box" style="display:none; background: #000; padding: 10px; margin-bottom: 10px; border-radius: 5px; font-family: monospace;"></div>
-                <button onclick="togglePhrases()" class="btn-action btc-color">VIEW RECOVERY PHRASES</button>
+                <hr>
+                <h3>Recovery Phrases</h3>
+                <div id="phrases-display" class="phrases-box ethik-blur"></div>
+                <button onclick="togglePhrases()" class="btn-action btc-color">VIEW PHRASES</button>
             </div>
             <div class="status-box">
                 <h3>Referral Program (25%)</h3>
-                <p>Your unique Invitation-Link:</p>
                 <div class="crypto-address" id="invite-link" style="font-size: 0.7rem;"></div>
             </div>
         </div>
@@ -77,18 +72,18 @@
             <h2>Master Control - Satoramy</h2>
             <div class="status-box admin-glow">
                 <h3>Update Global EUR Value</h3>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Enter Total EUR">
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR">
                 <button onclick="adminSetEur()" class="btn-action">SYNC DATABASE</button>
             </div>
         </div>
 
         <div id="page-register" class="page" style="display:none;">
             <div class="status-box">
-                <h2>Register Account</h2>
+                <h2>Register</h2>
                 <input type="text" id="reg-user" placeholder="Username" class="input-dark">
-                <input type="email" id="reg-email" placeholder="Email Address" class="input-dark">
-                <input type="password" id="reg-pass" placeholder="Create Password" class="input-dark">
-                <button onclick="handleRegister()" class="btn-action accent-btn">CREATE SECURE WALLET</button>
+                <input type="email" id="reg-email" placeholder="Email" class="input-dark">
+                <input type="password" id="reg-pass" placeholder="Password" class="input-dark">
+                <button onclick="handleRegister()" class="btn-action accent-btn">CREATE WALLET</button>
             </div>
         </div>
 
@@ -101,10 +96,6 @@
             </div>
         </div>
     </main>
-
-    <footer style="text-align: center; padding: 20px; opacity: 0.5; font-size: 0.8rem;">
-        &copy; 2025 RFOF Social Club - Decentralized Sato-Network
-    </footer>
 
     <script src="assets/js/script.js"></script>
 </body>
