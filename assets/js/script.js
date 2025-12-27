@@ -1,7 +1,7 @@
 const BTC_GOAL = 1000;
 const EUR_ROUND_LIMIT = 1000;
 const ADMIN_ID = "Satoramy"; // Korrigiert auf dein Pseudonym
-const API_URL = "http://localhost:5050/api";
+const API_URL = "http://192.168.178.50:5050/api";
 
 let state = {
     user: JSON.parse(localStorage.getItem('session_user')) || null,
