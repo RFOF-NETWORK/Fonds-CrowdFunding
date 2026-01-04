@@ -1,88 +1,15 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>RFOF SOCIAL CLUB – Sato-Network</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
-    <header class="site-header">
-        <div class="container nav-bar">
-            <h1 onclick="showPage('home')" style="cursor:pointer">RFOF SOCIAL CLUB</h1>
-            <nav id="nav-guest">
-                <button onclick="showPage('login')" class="btn-nav">Login</button>
-                <button onclick="showPage('register')" class="btn-nav accent-btn">Register</button>
-            </nav>
-            <nav id="nav-user" style="display:none;">
-                <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
-                <button onclick="showPage('profile')" class="btn-nav">My Wallet</button>
-                <button id="admin-link" onclick="showPage('admin')" class="btn-nav admin-btn admin-glow" style="display:none;">Master-Admin</button>
-                <button onclick="logout()" class="btn-nav logout-btn">Logout</button>
-            </nav>
-        </div>
-    </header>
-
-    <main class="container">
-        <div id="page-home" class="page">
-            <section class="status-section">
-                <h2>Crowdfunding Progress</h2>
-                <div class="status-box">
-                    <div class="status-row"><span>EUR Contributions:</span> <span id="current-eur">0 €</span></div>
-                    <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
-                </div>
-                <div class="status-box btc-border">
-                    <div class="status-row"><span>Goal:</span> <span id="text-btc">0 / 1000 BTC</span></div>
-                    <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
-                </div>
-            </section>
-            <section class="payment-methods">
-                <div class="status-box">
-                    <h3>PayPal Contribution</h3>
-                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg">DONATE VIA PAYPAL</a>
-                </div>
-                <p class="news-tag">Follow the vision: <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
-            </section>
-        </div>
-
-        <div id="page-profile" class="page" style="display:none;">
-            <h2>Personal Sato-Extension</h2>
-            <div class="status-box">
-                <h3>Your BTC Wallet</h3>
-                <div class="crypto-address" id="user-btc-address">Syncing...</div>
-                <div class="status-row">
-                    <span>Balance (incl. 25% Rewards):</span> 
-                    <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00 BTC</span>
-                </div>
-                <hr>
-                <h3>Security Phrases</h3>
-                <div id="phrases-display" class="phrases-box ethik-blur"></div>
-                <button onclick="togglePhrases()" class="btn-action btc-color-btn">SHOW PHRASES</button>
-            </div>
-            <div class="status-box">
-                <h3>Affiliate Program (25% Commission)</h3>
-                <p>Share your link and earn 25% on every contribution:</p>
-                <div class="crypto-address" id="invite-link"></div>
-            </div>
-        </div>
-
-        <div id="page-admin" class="page" style="display:none;">
-            <h2>Master Control - Satoramy</h2>
-            <div class="status-box admin-glow">
-                <h3>Update Global EUR (Triggers 25% Distribution)</h3>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR Value">
-                <button onclick="adminSetEur()" class="btn-action">SYNC & DISTRIBUTE</button>
-            </div>
-        </div>
-        
-        <div id="page-register" class="page" style="display:none;"><div class="status-box"><h2>Register</h2><input type="text" id="reg-user" placeholder="Username" class="input-dark"><input type="email" id="reg-email" placeholder="Email" class="input-dark"><input type="password" id="reg-pass" placeholder="Password" class="input-dark"><button onclick="handleRegister()" class="btn-action accent-btn">CREATE WALLET</button></div></div>
-        <div id="page-login" class="page" style="display:none;"><div class="status-box"><h2>Login</h2><input type="text" id="login-user" placeholder="Username" class="input-dark"><input type="password" id="login-pass" placeholder="Password" class="input-dark"><button onclick="handleLogin()" class="btn-action">SIGN IN</button></div></div>
-    </main>
-
-    <footer class="news-tag" style="margin-bottom: 40px;">
-        <p>© 2025 RFOF SOCIAL CLUB | <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
-    </footer>
-
-    <script src="assets/js/script.js"></script>
-</body>
-</html>
+!DOCTYPE html>
+<html lang="de"><head><meta charset="UTF-8"><title>RFOF SOCIAL CLUB</title>
+<link rel="stylesheet" href="assets/css/style.css"></head><body>
+<div id="nav-guest">
+  <input id="login-user" placeholder="User"> <input id="login-pass" type="password" placeholder="Pass">
+  <button onclick="handleLogin()">Login</button> <button onclick="showPage('reg')">Register</button>
+</div>
+<div id="nav-user" style="display:none;">
+  Willkommen <span id="user-display"></span> - Balance: <span id="user-balance">0</span> BTC
+  <button onclick="logout()">Logout</button>
+</div>
+<h2>Crowdfunding Progress</h2>
+<p>EUR Contributions: <span id="current-eur">0</span></p>
+<p>Goal: <span id="text-btc">0 / 1000 BTC</span></p>
+<script src="assets/js/script.js"></script></body></html>
