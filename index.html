@@ -29,11 +29,11 @@
                 <h2>Crowdfunding Progress</h2>
                 <div class="status-box">
                     <div class="status-row"><span>EUR Contributions:</span> <span id="current-eur">0 €</span></div>
-                    <div class="progress-bar"><div id="fill-eur" class="progress-fill" style="width: 0%;"></div></div>
+                    <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
                 <div class="status-box btc-border">
                     <div class="status-row"><span>Goal:</span> <span id="text-btc">0 / 1000 BTC</span></div>
-                    <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color" style="width: 0%;"></div></div>
+                    <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
                 </div>
             </section>
             <section class="payment-methods">
@@ -54,10 +54,10 @@
                     <span>Balance (incl. 25% Rewards):</span> 
                     <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00 BTC</span>
                 </div>
-                <hr>
+                <hr style="opacity: 0.1; margin: 20px 0;">
                 <h3>Security Phrases</h3>
                 <div id="phrases-display" class="phrases-box ethik-blur"></div>
-                <button onclick="togglePhrases()" class="btn-action btc-color-btn">SHOW PHRASES</button>
+                <button onclick="togglePhrases()" class="btn-action" style="margin-top: 15px; background: #333; color: white;">SHOW PHRASES</button>
             </div>
             <div class="status-box">
                 <h3>Affiliate Program (25% Commission)</h3>
@@ -70,7 +70,7 @@
             <h2>Master Control - Satoramy</h2>
             <div class="status-box admin-glow">
                 <h3>Update Global EUR (Triggers 25% Distribution)</h3>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR Value" style="width:100%; margin-bottom:10px; padding:10px;">
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR Value">
                 <button onclick="adminSetEur()" class="btn-action">SYNC & DISTRIBUTE</button>
             </div>
         </div>
@@ -78,9 +78,9 @@
         <div id="page-register" class="page" style="display:none;">
             <div class="status-box">
                 <h2>Register</h2>
-                <input type="text" id="reg-user" placeholder="Username" class="input-dark" style="width:100%; margin-bottom:10px; padding:10px;">
-                <input type="email" id="reg-email" placeholder="Email" class="input-dark" style="width:100%; margin-bottom:10px; padding:10px;">
-                <input type="password" id="reg-pass" placeholder="Password" class="input-dark" style="width:100%; margin-bottom:10px; padding:10px;">
+                <input type="text" id="reg-user" placeholder="Username" class="input-dark">
+                <input type="email" id="reg-email" placeholder="Email" class="input-dark">
+                <input type="password" id="reg-pass" placeholder="Password" class="input-dark">
                 <button onclick="handleRegister()" class="btn-action accent-btn">CREATE WALLET</button>
             </div>
         </div>
@@ -88,8 +88,8 @@
         <div id="page-login" class="page" style="display:none;">
             <div class="status-box">
                 <h2>Login</h2>
-                <input type="text" id="login-user" placeholder="Username" class="input-dark" style="width:100%; margin-bottom:10px; padding:10px;">
-                <input type="password" id="login-pass" placeholder="Password" class="input-dark" style="width:100%; margin-bottom:10px; padding:10px;">
+                <input type="text" id="login-user" placeholder="Username" class="input-dark">
+                <input type="password" id="login-pass" placeholder="Password" class="input-dark">
                 <button onclick="handleLogin()" class="btn-action">SIGN IN</button>
             </div>
         </div>
