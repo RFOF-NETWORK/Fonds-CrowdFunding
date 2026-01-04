@@ -26,62 +26,53 @@
     <main class="container">
         <div id="page-home" class="page">
             <section class="status-section">
-                <h2>Crowdfunding Progress</h2>
+                <h2>Axiom Progress</h2>
                 <div class="status-box">
-                    <div class="status-row"><span>EUR Contributions:</span> <span id="current-eur">0 €</span></div>
+                    <div class="status-row"><span>EUR Contribution Pool:</span> <span id="current-eur">0 € (Round 1)</span></div>
                     <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
                 <div class="status-box btc-border">
-                    <div class="status-row"><span>Goal:</span> <span id="text-btc">0 / 1000 BTC</span></div>
+                    <div class="status-row">
+                        <span style="display:flex; align-items:center;">
+                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" style="width:18px; margin-right:8px;"> 
+                            Master-Node Goal:
+                        </span> 
+                        <span id="text-btc">0.00000000 / 1000 BTC</span>
+                    </div>
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
                 </div>
             </section>
+            
             <section class="payment-methods">
                 <div class="status-box">
-                    <h3>PayPal Contribution</h3>
-                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg">DONATE VIA PAYPAL</a>
+                    <h3>Direct Support</h3>
+                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg">CONTRIBUTE VIA PAYPAL</a>
                 </div>
-                <p class="news-tag">Follow the vision: <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
             <h2>Personal Sato-Extension</h2>
             <div class="status-box">
-                <h3>Your BTC Wallet</h3>
-                <div class="crypto-address" id="user-btc-address">Syncing...</div>
-                <div class="status-row">
-                    <span>Balance (incl. 25% Rewards):</span> 
-                    <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00 BTC</span>
+                <h3>Sato-Address (Sync via Python Bridge)</h3>
+                <div class="crypto-address" id="user-btc-address">Awaiting Sync...</div>
+                <div class="status-row" style="margin-top:15px;">
+                    <span>Calculated Balance:</span> 
+                    <span id="user-balance" style="color: #f7931a; font-weight: bold; font-size:1.2em;">0.00 BTC</span>
                 </div>
-                <hr style="opacity: 0.1; margin: 20px 0;">
-                <h3>Security Phrases</h3>
-                <div id="phrases-display" class="phrases-box ethik-blur"></div>
-                <button onclick="togglePhrases()" class="btn-action" style="margin-top: 15px; background: #333; color: white;">SHOW PHRASES</button>
-            </div>
-            <div class="status-box">
-                <h3>Affiliate Program (25% Commission)</h3>
-                <p>Share your link and earn 25% on every contribution:</p>
-                <div class="crypto-address" id="invite-link">No link generated yet</div>
+                <hr style="opacity:0.1; margin:20px 0;">
+                <h3>Algorithm Security (BIP-39 Standard)</h3>
+                <div id="phrases-display" class="phrases-box ethik-blur">Words are encrypted in Local Storage.</div>
+                <button onclick="togglePhrases()" class="btn-action" style="margin-top:10px; background:#1a1a1a; color:#fff;">UNBLUR PHRASES</button>
             </div>
         </div>
 
         <div id="page-admin" class="page" style="display:none;">
             <h2>Master Control - Satoramy</h2>
             <div class="status-box admin-glow">
-                <h3>Update Global EUR (Triggers 25% Distribution)</h3>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR Value">
-                <button onclick="adminSetEur()" class="btn-action">SYNC & DISTRIBUTE</button>
-            </div>
-        </div>
-        
-        <div id="page-register" class="page" style="display:none;">
-            <div class="status-box">
-                <h2>Register</h2>
-                <input type="text" id="reg-user" placeholder="Username" class="input-dark">
-                <input type="email" id="reg-email" placeholder="Email" class="input-dark">
-                <input type="password" id="reg-pass" placeholder="Password" class="input-dark">
-                <button onclick="handleRegister()" class="btn-action accent-btn">CREATE WALLET</button>
+                <h3>Manual DB Sync (C++ Logic Bypass)</h3>
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Set Global EUR Total">
+                <button onclick="adminSetEur()" class="btn-action">EXECUTE SYNC</button>
             </div>
         </div>
 
@@ -93,10 +84,21 @@
                 <button onclick="handleLogin()" class="btn-action">SIGN IN</button>
             </div>
         </div>
+
+        <div id="page-register" class="page" style="display:none;">
+            <div class="status-box">
+                <h2>Create Wallet</h2>
+                <input type="text" id="reg-user" placeholder="Username" class="input-dark">
+                <input type="email" id="reg-email" placeholder="Email (Optional)" class="input-dark">
+                <input type="password" id="reg-pass" placeholder="Password" class="input-dark">
+                <button onclick="handleRegister()" class="btn-action accent-btn">GENERATE SATO-ADDRESS</button>
+            </div>
+        </div>
     </main>
 
-    <footer class="news-tag" style="margin-bottom: 40px; text-align: center;">
-        <p>© 2025 RFOF SOCIAL CLUB | <a href="https://instagram.com/bitcoininternet" target="_blank">@bitcoininternet</a></p>
+    <footer class="news-tag">
+        <p>Visionary: <a href="https://instagram.com/BitcoinInternet" target="_blank">@BitcoinInternet</a></p>
+        <p style="font-size: 0.7em; opacity: 0.5; margin-top: 10px;">Bridge: Python 3.10 | Core: C++ | Logic: PHP 8.2</p>
     </footer>
 
     <script src="assets/js/script.js"></script>
