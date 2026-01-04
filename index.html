@@ -40,14 +40,16 @@
                         <span id="text-btc">0.00000000 / 1000 BTC</span>
                     </div>
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
+                    
+                    <button onclick="showPage('profile')" class="btn-action btc-color" style="margin-top:15px; border:none; color:black;">CONTRIBUTE BTC NOW</button>
                 </div>
             </section>
             
             <section class="payment-methods">
                 <div class="status-box">
                     <h3>Direct Support (Satoramy Core)</h3>
-                    <p style="font-size:0.8em; color:var(--text-dim); margin-bottom:10px;">Send BTC to Master-Node:</p>
-                    <div class="crypto-address" style="font-size:0.8em;">bc1qd47242e430d648c7007c2fbcbd15fa9ea468</div>
+                    <p style="font-size:0.8em; color:var(--text-dim); margin-bottom:10px;">Master-Node Address (Copy for Wallet):</p>
+                    <div class="crypto-address" style="font-size:0.8em; border: 1px solid var(--sato-gold);">bc1qd47242e430d648c7007c2fbcbd15fa9ea468</div>
                     <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg" style="margin-top:15px; display:block; text-align:center; text-decoration:none;">PAYPAL (NON-MEMBERS)</a>
                 </div>
             </section>
@@ -70,8 +72,8 @@
             
             <div class="status-box">
                 <h3>Referral Program (25% Comm.)</h3>
-                <p>Share your link to earn from new contributions:</p>
-                <div class="crypto-address" id="invite-link">No link generated.</div>
+                <p>Your unique Link to invite others:</p>
+                <div class="crypto-address" id="invite-link" style="color:var(--sato-gold);">Generating...</div>
             </div>
         </div>
 
@@ -90,7 +92,7 @@
                 <h2>Login</h2>
                 <input type="text" id="login-user" placeholder="Username" class="input-dark">
                 <input type="password" id="login-pass" placeholder="Password" class="input-dark">
-                <button onclick="handleLogin()" class="btn-action">SIGN IN</button>
+                <button handleLogin()" class="btn-action">SIGN IN</button>
             </div>
         </div>
 
