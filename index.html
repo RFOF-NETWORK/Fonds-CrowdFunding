@@ -28,62 +28,40 @@
             <section class="status-section">
                 <h2>Axiom Progress</h2>
                 <div class="status-box">
-                    <div class="status-row"><span>EUR Contribution Pool:</span> <span id="current-eur">0 € (Round 1)</span></div>
+                    <div class="status-row"><span>EUR Contribution Pool:</span> <span id="current-eur">0 €</span></div>
                     <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
                 <div class="status-box btc-border">
                     <div class="status-row">
-                        <span style="display:flex; align-items:center;">
-                            <img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" style="width:18px; margin-right:8px;"> 
-                            Master-Node Goal:
-                        </span> 
+                        <span><img src="https://cryptologos.cc/logos/bitcoin-btc-logo.png" style="width:18px;"> Master-Node Goal:</span> 
                         <span id="text-btc">0.00000000 / 1000 BTC</span>
                     </div>
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
-                    
-                    <button onclick="showPage('profile')" class="btn-action btc-color" style="margin-top:15px; border:none; color:black;">CONTRIBUTE BTC NOW</button>
-                </div>
-            </section>
-            
-            <section class="payment-methods">
-                <div class="status-box">
-                    <h3>Direct Support (Satoramy Core)</h3>
-                    <p style="font-size:0.8em; color:var(--text-dim); margin-bottom:10px;">Master-Node Address (Copy for Wallet):</p>
-                    <div class="crypto-address" style="font-size:0.8em; border: 1px solid var(--sato-gold);">bc1qd47242e430d648c7007c2fbcbd15fa9ea468</div>
-                    <a href="https://www.paypal.me/RFOFsocialCLUB" target="_blank" class="btn-action paypal-bg" style="margin-top:15px; display:block; text-align:center; text-decoration:none;">PAYPAL (NON-MEMBERS)</a>
+                    <button onclick="showPage('profile')" class="btn-action btc-color" style="margin-top:15px; color:black;">CONTRIBUTE BTC NOW</button>
                 </div>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
-            <h2>User Control Panel</h2>
+            <h2>Account & Wallet</h2>
             <div class="status-box">
-                <h3>Personal Sato-Wallet</h3>
-                <div class="crypto-address" id="user-btc-address">Syncing...</div>
-                <div class="status-row" style="margin-top:15px;">
-                    <span>Balance (incl. 25% Rewards):</span> 
-                    <span id="user-balance" style="color: #f7931a; font-weight: bold;">0.00 BTC</span>
-                </div>
-                <hr style="opacity:0.1; margin:20px 0;">
-                <h3>Security & Phrases (BIP-39)</h3>
-                <div id="phrases-display" class="phrases-box ethik-blur">**********</div>
-                <button onclick="togglePhrases()" class="btn-action" style="margin-top:10px; background:#1a1a1a; color:#fff;">UNBLUR SECRETS</button>
+                <h3>Sato-Wallet</h3>
+                <div class="crypto-address" id="user-btc-address">Sync...</div>
+                <p>Balance: <span id="user-balance" style="color:#f7931a;">0.00 BTC</span></p>
+                <div id="phrases-display" class="phrases-box ethik-blur" style="margin-top:10px;">**********</div>
+                <button onclick="togglePhrases()" class="btn-action">UNBLUR PHRASES</button>
+            </div>
+
+            <div class="status-box">
+                <h3>Settings</h3>
+                <input type="email" id="set-email" placeholder="New Email" class="input-dark">
+                <input type="password" id="set-pass" placeholder="New Password" class="input-dark">
+                <button onclick="updateAccount()" class="btn-action accent-btn">SAVE SETTINGS</button>
             </div>
             
             <div class="status-box">
-                <h3>Referral Program (25% Comm.)</h3>
-                <p>Your unique Link to invite others:</p>
-                <div class="crypto-address" id="invite-link" style="color:var(--sato-gold);">Generating...</div>
-            </div>
-        </div>
-
-        <div id="page-admin" class="page" style="display:none;">
-            <h2>Master Control - Satoramy</h2>
-            <div class="status-box admin-glow">
-                <h3>Axiom Injection (EUR -> BTC)</h3>
-                <p style="font-size:0.8em;">Confirm receipt of 1000€ to trigger distribution.</p>
-                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Current total EUR (e.g. 2000)">
-                <button onclick="adminSetEur()" class="btn-action">SYNC 1000€ ROUND</button>
+                <h3>Referral Link</h3>
+                <div class="crypto-address" id="invite-link">...</div>
             </div>
         </div>
 
@@ -92,7 +70,7 @@
                 <h2>Login</h2>
                 <input type="text" id="login-user" placeholder="Username" class="input-dark">
                 <input type="password" id="login-pass" placeholder="Password" class="input-dark">
-                <button handleLogin()" class="btn-action">SIGN IN</button>
+                <button onclick="handleLogin()" class="btn-action">SIGN IN</button>
             </div>
         </div>
 
@@ -104,12 +82,15 @@
                 <button onclick="handleRegister()" class="btn-action accent-btn">CREATE WALLET</button>
             </div>
         </div>
-    </main>
 
-    <footer class="news-tag">
-        <p>Visionary: <a href="https://instagram.com/BitcoinInternet" target="_blank">@BitcoinInternet</a></p>
-        <p style="font-size: 0.7em; opacity: 0.5;">Python Bridge | C++ Core | PHP Logic</p>
-    </footer>
+        <div id="page-admin" class="page" style="display:none;">
+            <div class="status-box admin-glow">
+                <h2>Admin Control</h2>
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR">
+                <button onclick="adminSetEur()" class="btn-action">SYNC DB</button>
+            </div>
+        </div>
+    </main>
 
     <script src="assets/js/script.js"></script>
 </body>
