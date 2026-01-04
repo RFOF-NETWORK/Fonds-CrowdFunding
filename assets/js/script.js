@@ -1,89 +1,122 @@
-const LOKAL_IP = "10.47.68.174";
-const API_URL = (window.location.hostname === LOKAL_IP) ? `http://${LOKAL_IP}:5050/api` : `https://rfof-master.loca.lt/api`;
+// Automatische Erkennung der API-URL
+// Wir prüfen, ob wir lokal arbeiten oder über den Tunnel
+const getApiUrl = () => {
+    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
+        return "http://127.0.0.1:5050/api";
+    }
+    // Falls du eine spezifische Netzwerk-IP nutzt (wie in deinem Log 10.37.132.135)
+    return `http://${window.location.hostname}:5050/api`;
+};
 
+const API_URL = getApiUrl();
 let state = { user: JSON.parse(localStorage.getItem('session_user')) || null };
 
+// Funktion zum Wechseln der Seiten (funktioniert immer lokal)
 function showPage(pid) {
+    console.log("Navigating to:", pid);
     document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
-    document.getElementById('page-' + pid).style.display = 'block';
+    const target = document.getElementById('page-' + pid);
+    if (target) target.style.display = 'block';
 }
 
 async function updateView() {
     try {
+        const payload = state.user ? { sync_user: state.user.username } : {};
         const res = await fetch(`${API_URL}/sync`, { 
             method: 'POST', 
             headers: {'Content-Type': 'application/json'}, 
-            body: JSON.stringify(state.user ? { sync_user: state.user.username } : {}) 
+            body: JSON.stringify(payload) 
         });
+        
+        if (!res.ok) throw new Error("Server not responding");
+        
         const data = await res.json();
         const db = data.db;
 
-        // GLOBAL EXPLORER LOGIC (Zusammengeführte History aller User)
-        let globalLogs = [];
-        Object.values(db.users).forEach(u => {
-            if(u.history) globalLogs = globalLogs.concat(u.history.map(h => `${u.username.substring(0,3)}...: ${h}`));
-        });
-        document.getElementById('global-explorer').innerHTML = globalLogs.sort().reverse().slice(0,20).join("<br>");
+        // Explorer füllen
+        if(db.explorer && document.getElementById('global-explorer')) {
+            document.getElementById('global-explorer').innerHTML = db.explorer.slice().reverse().join("<br>");
+        }
 
-        // USER VIEW LOGIC
+        // User Interface Updates
         if(state.user && db.users[state.user.username]) {
             const u = db.users[state.user.username];
             state.user = u;
             document.getElementById('nav-guest').style.display = 'none';
             document.getElementById('nav-user').style.display = 'flex';
-            if(u.role === 'admin') document.getElementById('admin-link').style.display = 'block';
+            
+            if(u.role === 'admin') {
+                const adminBtn = document.getElementById('admin-link');
+                if(adminBtn) adminBtn.style.display = 'block';
+            }
             
             document.getElementById('user-balance').textContent = `${u.balance} BTC`;
             document.getElementById('user-btc-address').textContent = u.wallet;
-            document.getElementById('phrases-display').textContent = u.phrases;
             document.getElementById('invite-link').textContent = `${window.location.origin}/?ref=${u.username}`;
             
             const histDiv = document.getElementById('user-history');
-            histDiv.innerHTML = u.history ? u.history.slice().reverse().join("<br>") : "No logs.";
+            if(histDiv) histDiv.innerHTML = u.history ? u.history.slice().reverse().join("<br>") : "No logs.";
         }
 
         document.getElementById('current-eur').textContent = `${db.global.eur} €`;
         document.getElementById('fill-eur').style.width = Math.min((db.global.eur % 1000 / 10), 100) + "%";
-    } catch(e) { console.warn("Sync failed"); }
+        
+    } catch(e) { 
+        console.error("Sync Error:", e);
+        // Kleiner visueller Hinweis, dass der Server offline ist
+        const explorer = document.getElementById('global-explorer');
+        if(explorer) explorer.innerHTML = "<span style='color:red'>OFFLINE: Start server_logic.py</span>";
+    }
 }
 
 async function handleLogin() {
     const u = document.getElementById('login-user').value;
     const p = document.getElementById('login-pass').value;
-    const res = await fetch(`${API_URL}/sync`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ login: { username: u, password: p } })
-    });
-    const data = await res.json();
-    if(data.user) { state.user = data.user; localStorage.setItem('session_user', JSON.stringify(data.user)); location.reload(); }
+    
+    try {
+        const res = await fetch(`${API_URL}/sync`, {
+            method: 'POST', 
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ login: { username: u, password: p } })
+        });
+        const data = await res.json();
+        if(data.user) { 
+            state.user = data.user; 
+            localStorage.setItem('session_user', JSON.stringify(data.user)); 
+            location.reload(); 
+        } else {
+            alert("Wrong credentials!");
+        }
+    } catch(e) {
+        alert("Cannot connect to Backend! Is server_logic.py running?");
+    }
 }
 
 async function handleRegister() {
     const u = document.getElementById('reg-user').value;
     const p = document.getElementById('reg-pass').value;
-    const res = await fetch(`${API_URL}/sync`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ register: { username: u, password: p, referrer: new URLSearchParams(window.location.search).get('ref') || 'none' } })
-    });
-    if((await res.json()).success) showPage('login');
+    try {
+        const res = await fetch(`${API_URL}/sync`, {
+            method: 'POST', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ register: { username: u, password: p, referrer: 'none' } })
+        });
+        const data = await res.json();
+        if(data.success) {
+            alert("Account created! You can now login.");
+            showPage('login');
+        }
+    } catch(e) {
+        alert("Registration failed. Backend unreachable.");
+    }
 }
 
-async function updateAccount() {
-    const res = await fetch(`${API_URL}/sync`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ update_settings: { username: state.user.username, new_password: document.getElementById('set-pass').value, new_email: document.getElementById('set-email').value } })
-    });
-    if((await res.json()).success) { alert("Data Synced!"); updateView(); }
+function logout() { 
+    localStorage.clear(); 
+    location.reload(); 
 }
 
-async function adminSetEur() {
-    await fetch(`${API_URL}/sync`, {
-        method: 'POST', headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify({ admin_eur: document.getElementById('admin-eur-val').value, admin_token: "Satoramy_Secure_Gate_77" })
-    });
+document.addEventListener('DOMContentLoaded', () => {
     updateView();
-}
-
-function togglePhrases() { document.getElementById('phrases-display').classList.toggle('ethik-blur'); }
-function logout() { localStorage.clear(); location.reload(); }
-document.addEventListener('DOMContentLoaded', updateView);
+    // Intervall für Live-Updates alle 5 Sekunden
+    setInterval(updateView, 5000);
+});
