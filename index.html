@@ -12,7 +12,7 @@
             <h1 onclick="showPage('home')" style="cursor:pointer">RFOF SOCIAL CLUB</h1>
             <nav id="nav-user" style="display:none;">
                 <button onclick="showPage('home')" class="btn-nav">Dashboard</button>
-                <button onclick="showPage('profile')" class="btn-nav">Settings & Wallet</button>
+                <button onclick="showPage('profile')" class="btn-nav">Account & Settings</button>
                 <button id="admin-link" onclick="showPage('admin')" class="btn-nav admin-btn admin-glow" style="display:none;">Master-Admin</button>
                 <button onclick="logout()" class="btn-nav logout-btn">Logout</button>
             </nav>
@@ -26,46 +26,88 @@
     <main class="container">
         <div id="page-home" class="page">
             <section class="status-section">
-                <h2>Axiom Progress</h2>
+                <h2>Live Network Status</h2>
                 <div class="status-box">
-                    <div class="status-row"><span>EUR Pool:</span> <span id="current-eur">0 €</span></div>
+                    <div class="status-row"><span>Global EUR Pool:</span> <span id="current-eur">0 €</span></div>
                     <div class="progress-bar"><div id="fill-eur" class="progress-fill"></div></div>
                 </div>
                 <div class="status-box btc-border">
-                    <div class="status-row"><span>BTC Goal:</span> <span id="text-btc">0.00 / 1000 BTC</span></div>
+                    <div class="status-row"><span>Master-Node Progress:</span> <span id="text-btc">0.00 / 1000 BTC</span></div>
                     <div class="progress-bar"><div id="fill-btc" class="progress-fill btc-color"></div></div>
-                    <button onclick="showPage('profile')" class="btn-action btc-color">CONTRIBUTE BTC</button>
+                    <button onclick="showPage('profile')" class="btn-action btc-color">GET BTC ADDRESS</button>
                 </div>
             </section>
         </div>
 
         <div id="page-profile" class="page" style="display:none;">
-            <h2>User Control Panel</h2>
-            <div class="status-box">
-                <h3>Wallet & Phrases</h3>
-                <div class="crypto-address" id="user-btc-address">Sync...</div>
-                <p>Balance: <span id="user-balance" style="color:#f7931a;">0.00 BTC</span></p>
-                <div id="phrases-display" class="phrases-box ethik-blur">**********</div>
-                <button onclick="togglePhrases()" class="btn-action">VIEW PHRASES</button>
-            </div>
+            <h2>Your Sato-Account</h2>
             
             <div class="status-box">
-                <h3>Settings</h3>
-                <input type="email" id="set-email" placeholder="New Email" class="input-dark">
-                <input type="password" id="set-pass" placeholder="New Password" class="input-dark">
-                <button onclick="updateAccount()" class="btn-action accent-btn">SAVE CHANGES</button>
+                <h3>Wallet & Referral</h3>
+                <p style="font-size:0.8em; color:var(--text-dim);">Your BTC Deposit Address (Fixed):</p>
+                <div class="crypto-address" id="user-btc-address">Sync...</div>
+                <div class="status-row" style="margin-top:10px;">
+                    <span>Available Balance:</span>
+                    <span id="user-balance" style="color:#f7931a; font-weight:bold;">0.00 BTC</span>
+                </div>
+                <hr style="opacity:0.1; margin:15px 0;">
+                <p style="font-size:0.8em; color:var(--text-dim);">Your Referral Link:</p>
+                <div class="crypto-address" id="invite-link" style="color:var(--sato-gold);">...</div>
             </div>
 
             <div class="status-box">
-                <h3>Log History</h3>
-                <div id="user-history" style="font-size: 0.7em; opacity: 0.6; max-height: 150px; overflow-y: auto;"></div>
+                <h3>Account Settings</h3>
+                <div class="input-group">
+                    <label>Update Email</label>
+                    <input type="email" id="set-email" placeholder="Enter new email" class="input-dark">
+                </div>
+                <div class="input-group">
+                    <label>Change Password</label>
+                    <input type="password" id="set-pass" placeholder="Enter new password" class="input-dark">
+                </div>
+                <button onclick="updateAccount()" class="btn-action accent-btn">UPDATE ACCOUNT DATA</button>
+                
+                <hr style="opacity:0.1; margin:20px 0;">
+                
+                <label>Security Phrases (Recovery Only)</label>
+                <div id="phrases-display" class="phrases-box ethik-blur">**********</div>
+                <button onclick="togglePhrases()" class="btn-action" style="background:#333;">SHOW SECRETS</button>
+            </div>
+
+            <div class="status-box">
+                <h3>Transaction & Activity Log</h3>
+                <div id="user-history" class="history-log"></div>
             </div>
         </div>
 
-        <div id="page-login" class="page" style="display:none;"><div class="status-box"><h2>Login</h2><input type="text" id="login-user" class="input-dark" placeholder="Username"><input type="password" id="login-pass" class="input-dark" placeholder="Password"><button onclick="handleLogin()" class="btn-action">SIGN IN</button></div></div>
-        <div id="page-register" class="page" style="display:none;"><div class="status-box"><h2>Register</h2><input type="text" id="reg-user" class="input-dark" placeholder="Username"><input type="password" id="reg-pass" class="input-dark" placeholder="Password"><button onclick="handleRegister()" class="btn-action accent-btn">CREATE</button></div></div>
-        <div id="page-admin" class="page" style="display:none;"><div class="status-box admin-glow"><h2>Admin</h2><input type="number" id="admin-eur-val" class="input-dark"><button onclick="adminSetEur()" class="btn-action">EXECUTE SYNC</button></div></div>
+        <div id="page-login" class="page" style="display:none;">
+            <div class="status-box auth-box">
+                <h2>Welcome Back</h2>
+                <input type="text" id="login-user" class="input-dark" placeholder="Username">
+                <input type="password" id="login-pass" class="input-dark" placeholder="Password">
+                <button onclick="handleLogin()" class="btn-action">SIGN IN</button>
+            </div>
+        </div>
+
+        <div id="page-register" class="page" style="display:none;">
+            <div class="status-box auth-box">
+                <h2>Create Sato-Wallet</h2>
+                <input type="text" id="reg-user" class="input-dark" placeholder="Choose Username">
+                <input type="password" id="reg-pass" class="input-dark" placeholder="Set Password">
+                <button onclick="handleRegister()" class="btn-action accent-btn">REGISTER & GENERATE WALLET</button>
+            </div>
+        </div>
+
+        <div id="page-admin" class="page" style="display:none;">
+            <div class="status-box admin-glow">
+                <h2>Master-Admin Control</h2>
+                <p>Inject EUR contributions to trigger BTC distribution:</p>
+                <input type="number" id="admin-eur-val" class="input-dark" placeholder="Total EUR Amount">
+                <button onclick="adminSetEur()" class="btn-action">EXECUTE SYNC & DISTRIBUTE</button>
+            </div>
+        </div>
     </main>
+
     <script src="assets/js/script.js"></script>
 </body>
 </html>
