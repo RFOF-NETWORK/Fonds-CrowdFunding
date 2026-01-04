@@ -1,22 +1,22 @@
-// Automatische Erkennung der API-URL
-// Wir prüfen, ob wir lokal arbeiten oder über den Tunnel
-const getApiUrl = () => {
-    if (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") {
-        return "http://127.0.0.1:5050/api";
-    }
-    // Falls du eine spezifische Netzwerk-IP nutzt (wie in deinem Log 10.37.132.135)
-    return `http://${window.location.hostname}:5050/api`;
+// Automatische Erkennung: Wir versuchen erst die lokale IP, dann localhost
+const API_URL = "http://127.0.0.1:5050/api";
+
+let state = { 
+    user: JSON.parse(localStorage.getItem('session_user')) || null 
 };
 
-const API_URL = getApiUrl();
-let state = { user: JSON.parse(localStorage.getItem('session_user')) || null };
-
-// Funktion zum Wechseln der Seiten (funktioniert immer lokal)
+// Diese Funktion MUSS gehen, sie schaltet nur die Sichtbarkeit um
 function showPage(pid) {
-    console.log("Navigating to:", pid);
-    document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+    console.log("Versuche Seite anzuzeigen:", pid);
+    const pages = document.querySelectorAll('.page');
+    pages.forEach(p => p.style.display = 'none');
+    
     const target = document.getElementById('page-' + pid);
-    if (target) target.style.display = 'block';
+    if (target) {
+        target.style.display = 'block';
+    } else {
+        console.error("Seite nicht gefunden: page-" + pid);
+    }
 }
 
 async function updateView() {
@@ -28,17 +28,16 @@ async function updateView() {
             body: JSON.stringify(payload) 
         });
         
-        if (!res.ok) throw new Error("Server not responding");
-        
         const data = await res.json();
         const db = data.db;
 
-        // Explorer füllen
-        if(db.explorer && document.getElementById('global-explorer')) {
-            document.getElementById('global-explorer').innerHTML = db.explorer.slice().reverse().join("<br>");
+        // Dashboard Updates
+        if(db.explorer) {
+            const exp = document.getElementById('global-explorer');
+            if(exp) exp.innerHTML = db.explorer.slice().reverse().join("<br>");
         }
 
-        // User Interface Updates
+        // Login-Status prüfen
         if(state.user && db.users[state.user.username]) {
             const u = db.users[state.user.username];
             state.user = u;
@@ -46,32 +45,32 @@ async function updateView() {
             document.getElementById('nav-user').style.display = 'flex';
             
             if(u.role === 'admin') {
-                const adminBtn = document.getElementById('admin-link');
-                if(adminBtn) adminBtn.style.display = 'block';
+                const adminLink = document.getElementById('admin-link');
+                if(adminLink) adminLink.style.display = 'block';
             }
+
+            // Account-Daten füllen
+            const bal = document.getElementById('user-balance');
+            if(bal) bal.textContent = `${u.balance} BTC`;
             
-            document.getElementById('user-balance').textContent = `${u.balance} BTC`;
-            document.getElementById('user-btc-address').textContent = u.wallet;
-            document.getElementById('invite-link').textContent = `${window.location.origin}/?ref=${u.username}`;
-            
-            const histDiv = document.getElementById('user-history');
-            if(histDiv) histDiv.innerHTML = u.history ? u.history.slice().reverse().join("<br>") : "No logs.";
+            const addr = document.getElementById('user-btc-address');
+            if(addr) addr.textContent = u.wallet;
         }
 
-        document.getElementById('current-eur').textContent = `${db.global.eur} €`;
-        document.getElementById('fill-eur').style.width = Math.min((db.global.eur % 1000 / 10), 100) + "%";
+        const eur = document.getElementById('current-eur');
+        if(eur) eur.textContent = `${db.global.eur} €`;
         
     } catch(e) { 
-        console.error("Sync Error:", e);
-        // Kleiner visueller Hinweis, dass der Server offline ist
-        const explorer = document.getElementById('global-explorer');
-        if(explorer) explorer.innerHTML = "<span style='color:red'>OFFLINE: Start server_logic.py</span>";
+        console.warn("Backend nicht erreichbar. Buttons im Account-Bereich könnten ohne API-Antwort hängen.");
     }
 }
 
+// LOGIN FUNKTION
 async function handleLogin() {
     const u = document.getElementById('login-user').value;
     const p = document.getElementById('login-pass').value;
+    
+    console.log("Login Versuch für:", u);
     
     try {
         const res = await fetch(`${API_URL}/sync`, {
@@ -85,13 +84,14 @@ async function handleLogin() {
             localStorage.setItem('session_user', JSON.stringify(data.user)); 
             location.reload(); 
         } else {
-            alert("Wrong credentials!");
+            alert("Login fehlgeschlagen!");
         }
     } catch(e) {
-        alert("Cannot connect to Backend! Is server_logic.py running?");
+        alert("Server antwortet nicht! Bitte 'server_logic.py' starten.");
     }
 }
 
+// REGISTER FUNKTION
 async function handleRegister() {
     const u = document.getElementById('reg-user').value;
     const p = document.getElementById('reg-pass').value;
@@ -102,11 +102,11 @@ async function handleRegister() {
         });
         const data = await res.json();
         if(data.success) {
-            alert("Account created! You can now login.");
+            alert("Account erstellt! Bitte einloggen.");
             showPage('login');
         }
     } catch(e) {
-        alert("Registration failed. Backend unreachable.");
+        alert("Registrierung fehlgeschlagen. Backend offline.");
     }
 }
 
@@ -115,8 +115,8 @@ function logout() {
     location.reload(); 
 }
 
+// Event-Listener beim Laden
 document.addEventListener('DOMContentLoaded', () => {
+    console.log("App gestartet");
     updateView();
-    // Intervall für Live-Updates alle 5 Sekunden
-    setInterval(updateView, 5000);
 });
